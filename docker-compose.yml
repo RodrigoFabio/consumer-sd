@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    container_name: publisher-go
+    environment:
+      NOME_FILA: exames-pendentes
+      URL_FILA: 192.168.207.
+      PORTA_FILA: 15672
+      
+    ports:
+      - "8080:8080"
+     
+     

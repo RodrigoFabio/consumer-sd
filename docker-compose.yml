@@ -6,7 +6,7 @@ services:
     container_name: publisher-go
     environment:
       NOME_FILA: exames-pendentes
-      URL_FILA: 192.168.207.
+      URL_FILA: amqp://guest:guest@192.168.207.165:5672/
       PORTA_FILA: 15672
       
     ports:

@@ -10,12 +10,12 @@ import (
 )
 
 func main() {
-	//conn, err := amqp.Dial(os.Getenv("URL_FILA"))
-	//nomeFila := os.Getenv("NOME_FILA")
+	conn, err := amqp.Dial(os.Getenv("URL_FILA"))
+	nomeFila := os.Getenv("NOME_FILA")
 
 	//=====================TESTE ==========================
-	conn, err := amqp.Dial("amqp://guest:guest@192.168.1.31:5672/")
-	nomeFila := "exames-pendentes"
+	//conn, err := amqp.Dial("amqp://guest:guest@192.168.1.31:5672/")
+	//nomeFila := "exames-pendentes"
 	//=====================================================
 
 	if err != nil {

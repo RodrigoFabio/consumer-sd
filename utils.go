@@ -26,9 +26,10 @@ func EnviarEmail(agendamentoJson string) {
 	// Configurações do servidor SMTP
 	from := "examedsd@gmail.com"
 	senha_app := "ywcs uxja mjrm ziit"
+	fmt.Print(":::::::::ENVIANDO EMAIL:::::::::")
 	body := MontaMensagem(agendamento)
 	to := []string{agendamento.EmailPaciente}
-
+	fmt.Print(body)
 	errr := smtp.SendMail("smtp.gmail.com:587", smtp.PlainAuth("", from, senha_app, "smtp.gmail.com"),
 		from,
 		to,

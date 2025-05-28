@@ -3,16 +3,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/smtp"
 )
-
-type Agendamentos struct {
-	DataHora      string `json:"data_hora"`
-	NomeExame     string `json:"nome_exame"`
-	Instrucoes    string `json:"instrucoes"`
-	Paciente      string `json:"nome_paciente"`
-	EmailPaciente string `json:"email_paciente"`
-}
 
 func EnviarEmail(agendamentoJson string) {
 
@@ -20,7 +13,7 @@ func EnviarEmail(agendamentoJson string) {
 
 	err := json.Unmarshal([]byte(agendamentoJson), &agendamento)
 	if err != nil {
-		fmt.Println("Erro ao fazer o unmarshall do JSON:", err)
+		log.Println("Erro ao fazer o unmarshall do JSON:", err)
 	}
 
 	// Configurações do servidor SMTP
@@ -51,7 +44,10 @@ func EnviarEmail(agendamentoJson string) {
 func MontaMensagem(agendamento Agendamentos) string {
 
 	msg := fmt.Sprintf(`Olá, %s! Tudo bem?
-	Somos da EXAMED e gostaríamos de informar que o seu exame de %s foi agendado com sucesso para o dia %s. 
+
+	Somos da EXAMED e gostaríamos de informar que o seu exame de %s foi agendado com sucesso para o dia %s.
+	
+	
 	Para que tudo ocorra bem, recomendamos que voce siga as seguintes instruções e preparativos:
 	%s`, agendamento.Paciente, agendamento.NomeExame, agendamento.DataHora, agendamento.Instrucoes)
 

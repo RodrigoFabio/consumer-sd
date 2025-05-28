@@ -19,13 +19,13 @@ func main() {
 	//=====================================================
 
 	if err != nil {
-		log.Fatalf("failed to connect to RabbitMQ: %v", err)
+		log.Fatalf("Falha ao se conectar ao RabbitMQ: %v verifique se o servidor de fila foi iniciado corretamente", err)
 	}
 	defer conn.Close()
 
 	ch, err := conn.Channel()
 	if err != nil {
-		log.Fatalf("failed to open a channel: %v", err)
+		log.Fatalf("Fallha ao abrir canal: %v", err)
 	}
 	defer ch.Close()
 
@@ -38,7 +38,7 @@ func main() {
 		nil,
 	)
 	if err != nil {
-		log.Fatalf("failed to declare a queue: %v", err)
+		log.Fatalf("Falha ao declarar a fila: %v Verifique se ela foi corretamente criada.", err)
 	}
 
 	msgs, err := ch.Consume(
@@ -51,7 +51,7 @@ func main() {
 		nil,
 	)
 	if err != nil {
-		log.Fatalf("failed to register a consumer: %v", err)
+		log.Fatalf("Falha ao registrar um consumer: %v", err)
 	}
 
 	sigchan := make(chan os.Signal, 1)
@@ -60,7 +60,7 @@ func main() {
 	forever := make(chan bool)
 
 	go func() {
-		 log.Println("Consumer iniciado. Aguardando mensagens...")
+		log.Println("Consumer iniciado. Aguardando mensagens...")
 		for d := range msgs {
 			log.Printf("message received: %v", string(d.Body))
 			EnviarEmail(string(d.Body))

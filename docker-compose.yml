@@ -3,11 +3,15 @@ version: '3.8'
 services:
   backend:
     build: .
-    container_name: publisher-go
+    container_name: consumer-go
     environment:
       NOME_FILA: exames-pendentes
-      URL_FILA: amqp://guest:guest@192.168.207.165:5672/
-      PORTA_FILA: 15672
+      IP_FILA: 192.168.207.165
+      USUARIO_FILA: guest
+      PASS_FILA: guest
+      PORTA_FILA: 5672
+      SENHA_APP_GMAIL: "senha"
+      FROM_APP_GMAIL: "email"
       
     ports:
       - "8080:8080"

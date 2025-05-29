@@ -10,13 +10,8 @@ import (
 )
 
 func main() {
-	conn, err := amqp.Dial(os.Getenv("URL_FILA"))
+	conn, err := amqp.Dial(GetStringConnFila)
 	nomeFila := os.Getenv("NOME_FILA")
-
-	//=====================TESTE ==========================
-	//conn, err := amqp.Dial("amqp://guest:guest@192.168.1.31:5672/")
-	//nomeFila := "exames-pendentes"
-	//=====================================================
 
 	if err != nil {
 		log.Fatalf("Falha ao se conectar ao RabbitMQ: %v verifique se o servidor de fila foi iniciado corretamente", err)

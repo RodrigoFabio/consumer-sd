@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/smtp"
+	"os"
 )
 
 func EnviarEmail(agendamentoJson string) {
@@ -17,9 +18,9 @@ func EnviarEmail(agendamentoJson string) {
 	}
 
 	// Configurações do servidor SMTP
-	from := "examedsd@gmail.com"
-	senha_app := "ywcs uxja mjrm ziit"
-	fmt.Print(":::::::::ENVIANDO EMAIL:::::::::")
+	from := os.Getenv("FROM_APP_GMAIL")
+	senha_app := os.Getenv("SENHA_APP")
+
 	body := MontaMensagem(agendamento)
 	to := []string{agendamento.EmailPaciente}
 	fmt.Print(body)
@@ -32,13 +33,6 @@ func EnviarEmail(agendamentoJson string) {
 		fmt.Print(errr)
 	}
 
-	// Exemplo de impressão dos dados do agendamento
-	fmt.Println("Enviando e-mail com os seguintes dados:")
-	fmt.Printf("Data e Hora: %s\n", agendamento.DataHora)
-	fmt.Printf("ID do Exame: %s\n", agendamento.NomeExame)
-	fmt.Printf("Instruções: %s\n", agendamento.Instrucoes)
-	fmt.Printf("Nome do Paciente: %s\n", agendamento.Paciente)
-	fmt.Printf("Email do Paciente: %s\n", agendamento.EmailPaciente)
 }
 
 func MontaMensagem(agendamento Agendamentos) string {
@@ -52,4 +46,14 @@ func MontaMensagem(agendamento Agendamentos) string {
 	%s`, agendamento.Paciente, agendamento.NomeExame, agendamento.DataHora, agendamento.Instrucoes)
 
 	return msg
+}
+
+func GetStringConnFila() string {
+	ip_fila := os.Getenv("IP_FILA")
+	porta_fila := os.Getenv("PORTA_FILA")
+	usuario_fila := os.Getenv("USUARIO_FILA")
+	senha_fila := os.Getenv("PASS_FILA")
+
+	return fmt.Sprintf("amqp://%s:%s@%s:%s/", usuario_fila,
+		senha_fila, ip_fila, porta_fila)
 }
